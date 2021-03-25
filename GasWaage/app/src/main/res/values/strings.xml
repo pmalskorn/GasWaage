@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GasWaage</string>
+    <string name="startScanning">Start Scanning</string>
+    <string name="cancelScanning">Cancel Scanning</string>
+</resources>

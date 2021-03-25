@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/scanBLEDevicesFragment">
+
+    <fragment
+        android:id="@+id/scanBLEDevicesFragment"
+        android:name="com.example.gaswaage.ScanBLEDevicesFragment"
+        android:label="scan_b_le_devices_fragment"
+        tools:layout="@layout/scan_b_le_devices_fragment" />
+
+    <fragment
+        android:id="@+id/gasTankFragment"
+        android:name="com.example.gaswaage.GasTankFragment"
+        android:label="gas_tank_fragment"
+        tools:layout="@layout/gas_tank_fragment" />
+</navigation>
