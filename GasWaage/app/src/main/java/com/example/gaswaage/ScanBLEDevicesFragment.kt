@@ -13,6 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.gaswaage.databinding.BluetoothListItemBinding
 import com.example.gaswaage.databinding.ScanBLeDevicesFragmentBinding
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +24,7 @@ import kotlinx.coroutines.launch
 
 
 class ScanBLEDevicesFragment : Fragment() {
-    val bleViewModel = BLEViewModel()
+    val bleViewModel = BLEViewModel.singelton
     lateinit var dataBinding : ScanBLeDevicesFragmentBinding
 
     val PERMISSION_REQUEST_CODE: Int = 101
@@ -92,6 +94,9 @@ class ScanBLEDevicesFragment : Fragment() {
             .setPositiveButton("Yes",
                 DialogInterface.OnClickListener { dialog, id ->
                     bleViewModel.connectToDevice(scanResult, context)
+                    findNavController().navigate(
+                     R.id.action_global_gasTankFragment
+                    )
                 })
             .setNegativeButton("No",
                 DialogInterface.OnClickListener { dialog, id ->
@@ -107,6 +112,5 @@ class ScanBLEDevicesFragment : Fragment() {
     }
 
     private fun requestPermission() = requestPermissions(PERMISSION_LIST, PERMISSION_REQUEST_CODE)
-
 
 }

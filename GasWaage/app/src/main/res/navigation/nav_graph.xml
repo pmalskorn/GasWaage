@@ -16,4 +16,13 @@
         android:name="com.example.gaswaage.GasTankFragment"
         android:label="gas_tank_fragment"
         tools:layout="@layout/gas_tank_fragment" />
+    <fragment
+        android:id="@+id/terminalFragment"
+        android:name="com.example.gaswaage.TerminalFragment"
+        android:label="fragment_terminal"
+        tools:layout="@layout/fragment_terminal">
+    </fragment>
+
+    <action android:id="@+id/action_global_terminalFragment" app:destination="@id/terminalFragment" />
+    <action android:id="@+id/action_global_gasTankFragment" app:destination="@id/gasTankFragment"/>
 </navigation>

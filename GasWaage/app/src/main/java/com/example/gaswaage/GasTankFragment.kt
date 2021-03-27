@@ -1,18 +1,29 @@
 package com.example.gaswaage
 
 import android.animation.ValueAnimator
+import android.content.ComponentName
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.gaswaage.databinding.GasTankFragmentBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 
-class GasTankFragment : Fragment() {
-
+class GasTankFragment : Fragment(), SerialListener, ServiceConnection {
     lateinit var viewBinding: GasTankFragmentBinding
+    val bleViewModel = BLEViewModel.singelton
+
+    private val service = SerialService()
+    private lateinit var socket: SerialSocket
 
     companion object {
         fun newInstance() = GasTankFragment()
@@ -30,22 +41,78 @@ class GasTankFragment : Fragment() {
     }
 
     private fun setupButtons() {
-        viewBinding.bTest.setOnClickListener {
-            val newvalue = 1 + Random.nextInt(99)
-            setProgress(newvalue)
+    }
+
+    fun setProgress(value: Int, duration: Long = 1000) {
+        val oldvalue = gasTankViewModel.progress.value ?: 0
+
+        val anim = ValueAnimator.ofInt(oldvalue * 2, value * 2)
+
+        anim.addUpdateListener { valueAnimator ->
+            viewBinding.vProgress.layoutParams = viewBinding.vProgress.layoutParams.apply {
+                var tmp = valueAnimator.animatedValue as Int
+
+                height = if (tmp > 0){
+                    tmp*2
+                }else {
+                    1
+                }
+            }
+            viewBinding.tvProgress.text = "${(valueAnimator.animatedValue as Int) / 2}%"
+        }
+        anim.duration = duration
+        anim.start()
+        gasTankViewModel.progress.postValue(value)
+
+
+    }
+
+
+    fun send(message: String) {
+
+        var b = message.encodeToByteArray()
+        service.write(b)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        service.attach(this)
+        socket = SerialSocket(requireActivity().applicationContext, bleViewModel.gatt.device)
+
+        service.connect(socket)
+
+        GlobalScope.launch(Dispatchers.IO) {
+            while (true) {
+                delay(5000)
+                send("a")
+            }
         }
     }
 
-    fun setProgress(value: Int, duration: Long = 5000){
-        if (value in 0..100) {
-            val anim = ValueAnimator.ofInt(1, value*2)
-            anim.addUpdateListener { valueAnimator ->
-                viewBinding.vProgress.layoutParams = viewBinding.vProgress.layoutParams.apply { height = (valueAnimator.animatedValue as Int).dp }
-                viewBinding.tvProgress.text = "${(valueAnimator.animatedValue as Int)/2}%"
-            }
-            anim.duration = duration
-            anim.start()
-            gasTankViewModel.progress.postValue(value)
-        }
+    override fun onSerialConnect() {
+
+    }
+
+    override fun onSerialConnectError(e: Exception?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSerialRead(data: ByteArray?) {
+        var answer = String(data ?: byteArrayOf()).split('\n').firstOrNull()?.toInt() ?: 0
+        var mappedvalue = (16373965 - answer) / 24.545
+        Toast.makeText(requireContext(), mappedvalue.toString(), Toast.LENGTH_SHORT).show()
+        setProgress((mappedvalue / 2000 * 100).toInt())
+    }
+
+    override fun onSerialIoError(e: Exception?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+
+    }
+
+    override fun onServiceDisconnected(name: ComponentName?) {
+        TODO("Not yet implemented")
     }
 }

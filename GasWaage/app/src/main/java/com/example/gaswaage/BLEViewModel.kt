@@ -16,10 +16,15 @@ class BLEViewModel : ViewModel() {
     val isScanning = MutableLiveData<Boolean>(false)
     var devices = MutableLiveData<List<ScanResult>>(mutableListOf())
 
+    companion object {
+        var singelton: BLEViewModel = BLEViewModel()
+    }
+
+
     lateinit var gatt : BluetoothGatt
 
     var scanPeriod: Long = 10000
-    var strengthThreshold = -60
+    var strengthThreshold = -200
 
 
     val connectionState = MutableLiveData<Int>(BluetoothProfile.STATE_DISCONNECTED)
@@ -64,6 +69,14 @@ class BLEViewModel : ViewModel() {
 
     fun connectToDevice(scanresult: ScanResult, context: Context){
         gatt = scanresult.device.connectGatt(context, false, object : BluetoothGattCallback() {
+            override fun onCharacteristicChanged(
+                gatt: BluetoothGatt?,
+                characteristic: BluetoothGattCharacteristic?
+            ) {
+                super.onCharacteristicChanged(gatt, characteristic)
+                println("")
+            }
+
             override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
                 super.onConnectionStateChange(gatt, status, newState)
                 connectionState.postValue(newState)
@@ -83,7 +96,21 @@ class BLEViewModel : ViewModel() {
 
     fun send(){
         if (::gatt.isInitialized){
-            //gatt.writeCharacteristic()
+            for (gattService in gatt.getServices()) {
+                var c = gattService.getCharacteristics()
+                for (characteristic in c){
+                    var message = "a"
+                    var b = message.encodeToByteArray()
+                    if (characteristic != null){
+                        characteristic.value = b
+                        gatt.writeCharacteristic(characteristic)
+
+                        gatt.readCharacteristic(characteristic)
+                    }
+                }
+            }
+
+
         }
     }
 }

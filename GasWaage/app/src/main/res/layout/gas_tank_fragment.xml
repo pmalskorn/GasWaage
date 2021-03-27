@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="vm"
-            type="com.example.gaswaage.GasTankViewModel" />
+            name="progress"
+            type="Integer" />
     </data>
 
     <LinearLayout
@@ -51,12 +51,6 @@
             android:textStyle="bold"
             android:text="100%"
             android:textSize="34dp" />
-
-        <Button
-            android:id="@+id/b_test"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Random Fill"/>
 
 
     </LinearLayout>
