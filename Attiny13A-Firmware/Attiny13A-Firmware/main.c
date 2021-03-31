@@ -56,7 +56,7 @@ ISR(INT0_vect){
 		string[i] = data % 10 + '0';
 		data = data / 10;
 	}
-	for(int i = 7; i > 0; i--){
+	for(int i = 7; i >= 0; i--){
 		dbg_putchar(string[i]);
 	}
 	dbg_putchar('\n');
