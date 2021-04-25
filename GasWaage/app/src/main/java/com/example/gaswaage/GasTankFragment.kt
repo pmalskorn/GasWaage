@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.gaswaage.databinding.GasTankFragmentBinding
 import kotlinx.coroutines.Dispatchers
@@ -67,11 +68,19 @@ class GasTankFragment : Fragment(), SerialListener, ServiceConnection {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity).supportActionBar?.title = "Gas Level"
+    }
 
     fun send(message: String) {
 
         var b = message.encodeToByteArray()
-        service.write(b)
+        try {
+            service.write(b)
+        } catch (e: Exception){
+            //egal ^^
+        }
     }
 
     override fun onStart() {
@@ -94,7 +103,7 @@ class GasTankFragment : Fragment(), SerialListener, ServiceConnection {
     }
 
     override fun onSerialConnectError(e: Exception?) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onSerialRead(data: ByteArray?) {
@@ -105,7 +114,7 @@ class GasTankFragment : Fragment(), SerialListener, ServiceConnection {
     }
 
     override fun onSerialIoError(e: Exception?) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -113,6 +122,6 @@ class GasTankFragment : Fragment(), SerialListener, ServiceConnection {
     }
 
     override fun onServiceDisconnected(name: ComponentName?) {
-        TODO("Not yet implemented")
+
     }
 }

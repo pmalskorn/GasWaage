@@ -25,4 +25,15 @@
 
     <action android:id="@+id/action_global_terminalFragment" app:destination="@id/terminalFragment" />
     <action android:id="@+id/action_global_gasTankFragment" app:destination="@id/gasTankFragment"/>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.gaswaage.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <action android:id="@+id/action_global_settingsFragment" app:destination="@id/settingsFragment" />
+    <fragment
+        android:id="@+id/calibrateFragment"
+        android:name="com.example.gaswaage.CalibrateFragment"
+        android:label="fragment_calibrate"
+        tools:layout="@layout/fragment_calibrate" /><action android:id="@+id/action_global_calibrateFragment" app:destination="@id/calibrateFragment"/>
 </navigation>

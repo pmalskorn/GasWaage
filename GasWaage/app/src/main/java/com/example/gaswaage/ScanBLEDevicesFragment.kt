@@ -12,6 +12,7 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -94,6 +95,7 @@ class ScanBLEDevicesFragment : Fragment() {
             .setPositiveButton("Yes",
                 DialogInterface.OnClickListener { dialog, id ->
                     bleViewModel.connectToDevice(scanResult, context)
+                    SettingsViewModel.singelton.writeSetting("BT_DEVICE", scanResult.device.address)
                     findNavController().navigate(
                      R.id.action_global_gasTankFragment
                     )
@@ -109,6 +111,7 @@ class ScanBLEDevicesFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         bleViewModel.setupBluetooth(activity)
+        (activity as AppCompatActivity).supportActionBar?.title = "Scanner"
     }
 
     private fun requestPermission() = requestPermissions(PERMISSION_LIST, PERMISSION_REQUEST_CODE)

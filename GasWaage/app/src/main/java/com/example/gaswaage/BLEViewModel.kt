@@ -55,6 +55,7 @@ class BLEViewModel : ViewModel() {
     }
 
     fun startScanning() {
+
         if (::bls.isInitialized) {
             devices.postValue(listOf())
             viewModelScope.launch {
