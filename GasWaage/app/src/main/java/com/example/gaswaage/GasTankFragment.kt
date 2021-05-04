@@ -22,6 +22,9 @@ import kotlin.random.Random
 class GasTankFragment : Fragment(), SerialListener, ServiceConnection {
     lateinit var viewBinding: GasTankFragmentBinding
     val bleViewModel = BLEViewModel.singelton
+    val settings = SettingsViewModel.singelton
+
+    var running = true
 
     private val service = SerialService()
     private lateinit var socket: SerialSocket
@@ -91,7 +94,7 @@ class GasTankFragment : Fragment(), SerialListener, ServiceConnection {
         service.connect(socket)
 
         GlobalScope.launch(Dispatchers.IO) {
-            while (true) {
+            while (running) {
                 delay(5000)
                 send("a")
             }
@@ -108,9 +111,21 @@ class GasTankFragment : Fragment(), SerialListener, ServiceConnection {
 
     override fun onSerialRead(data: ByteArray?) {
         var answer = String(data ?: byteArrayOf()).split('\n').firstOrNull()?.toInt() ?: 0
-        var mappedvalue = (16373965 - answer) / 24.545
-        Toast.makeText(requireContext(), mappedvalue.toString(), Toast.LENGTH_SHORT).show()
-        setProgress((mappedvalue / 2000 * 100).toInt())
+        bleViewModel.lastValue.postValue(answer)
+        //var mappedvalue = (16373965 - answer) / 24.545
+        //Toast.makeText(requireContext(), mappedvalue.toString(), Toast.LENGTH_SHORT).show()
+        //setProgress((mappedvalue / 2000 * 100).toInt())
+        var weight = WeightCell.getWeightFromMeasurement(answer, Accuracy.G)
+
+        var maxGas = settings.getIntSetting("BOTTLE_FULL")-settings.getIntSetting("BOTTLE_EMPTY")
+        val percent = (weight-settings.getIntSetting("BOTTLE_EMPTY"))/maxGas
+
+        when{
+            percent > 1.0 -> {setProgress(100)}
+            percent <= 0 -> {setProgress(0)}
+            else -> {setProgress((percent*100).toInt())}
+        }
+
     }
 
     override fun onSerialIoError(e: Exception?) {

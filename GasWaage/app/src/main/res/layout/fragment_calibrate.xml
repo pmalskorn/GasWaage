@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -13,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:gravity="center"
             android:text="Remove all Weight of the Scale. Then Press the Button below"
@@ -37,7 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:gravity="center"
             android:text="Put Somthing on the Scale that weights around 1KG then press the Button Below"
@@ -47,13 +51,81 @@
             app:layout_constraintTop_toBottomOf="@+id/b_wight_zero" />
 
         <Button
+            android:id="@+id/b_weight_one"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Set Weight Zero"
+            android:text="Set 1 KG"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="@+id/textView2"
             app:layout_constraintStart_toStartOf="@+id/textView2"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Enter the Weight of an empty Gas Bottle in Kilo Gramms"
+            android:textSize="@dimen/font_size"
+            app:layout_constraintEnd_toEndOf="@+id/textView2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/b_weight_one" />
+
+        <EditText
+            android:id="@+id/et_empty_weight"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="#ced1c5"
+            android:inputType="number"
+            android:textSize="@dimen/font_size"
+            app:layout_constraintStart_toStartOf="@+id/b_weight_one"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <Button
+            android:id="@+id/b_set_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="Set"
+            app:layout_constraintBottom_toBottomOf="@+id/et_empty_weight"
+            app:layout_constraintStart_toEndOf="@+id/et_empty_weight"
+            app:layout_constraintTop_toTopOf="@+id/et_empty_weight" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Enter the Weight of a full Gas Bottle in Kilo Gramms"
+            android:textSize="@dimen/font_size"
+            app:layout_constraintEnd_toEndOf="@+id/textView2"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/b_set_empty" />
+
+        <EditText
+            android:id="@+id/et_full_weight"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="#ced1c5"
+            android:layout_marginTop="20dp"
+            android:inputType="number"
+            android:textSize="@dimen/font_size"
+            app:layout_constraintStart_toStartOf="@+id/b_weight_one"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <Button
+            android:id="@+id/b_set_full"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Set"
+            android:layout_marginStart="40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/et_full_weight"
+            app:layout_constraintStart_toEndOf="@+id/et_full_weight"
+            app:layout_constraintTop_toTopOf="@+id/et_full_weight" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 </layout>

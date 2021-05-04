@@ -26,6 +26,8 @@ class BLEViewModel : ViewModel() {
     var scanPeriod: Long = 10000
     var strengthThreshold = -200
 
+    val lastValue = MutableLiveData<Int>(0)
+
 
     val connectionState = MutableLiveData<Int>(BluetoothProfile.STATE_DISCONNECTED)
 

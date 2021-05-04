@@ -34,6 +34,8 @@ class SettingsFragment : Fragment() {
             dataBinding.textView2.text = if (getIntSetting("WEIGHT_ZERO") == 0) "Not Initialized" else "${getIntSetting("WEIGHT_ZERO")}"
             dataBinding.textView4.text = if (getIntSetting("WEIGHT_ONE_KG") == 0) "Not Initialized" else "${getIntSetting("WEIGHT_ONE_KG")}"
             dataBinding.textView6.text = if (getStringSetting("BT_DEVICE").isNullOrEmpty()) "Not Initialized" else getStringSetting("BT_DEVICE")
+            dataBinding.textView10.text = if (getIntSetting("BOTTLE_EMPTY") == 0) "Not Initialized" else getIntSetting("BOTTLE_EMPTY").toString()
+            dataBinding.textView8.text = if (getIntSetting("BOTTLE_FULL") == 0) "Not Initialized" else getIntSetting("BOTTLE_FULL").toString()
         }
     }
 
