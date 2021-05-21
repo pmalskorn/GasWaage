@@ -41,6 +41,21 @@ class GasTankFragment : Fragment(), SerialListener, ServiceConnection {
     ): View? {
         viewBinding = GasTankFragmentBinding.inflate(inflater)
         setupButtons()
+
+        service.attach(this)
+        socket = SerialSocket(requireActivity().applicationContext, bleViewModel.gatt.device)
+
+        service.connect(socket)
+
+        GlobalScope.launch(Dispatchers.IO) {
+            while (running) {
+                send("a")
+                delay(1000)
+            }
+        }
+
+        //setProgress(1)
+
         return viewBinding.root
     }
 
@@ -74,6 +89,17 @@ class GasTankFragment : Fragment(), SerialListener, ServiceConnection {
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity).supportActionBar?.title = "Gas Level"
+        running = true
+        GlobalScope.launch(Dispatchers.IO) {
+
+                send("a")
+                delay(1000)
+
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
     }
 
     fun send(message: String) {
@@ -83,21 +109,6 @@ class GasTankFragment : Fragment(), SerialListener, ServiceConnection {
             service.write(b)
         } catch (e: Exception){
             //egal ^^
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        service.attach(this)
-        socket = SerialSocket(requireActivity().applicationContext, bleViewModel.gatt.device)
-
-        service.connect(socket)
-
-        GlobalScope.launch(Dispatchers.IO) {
-            while (running) {
-                delay(5000)
-                send("a")
-            }
         }
     }
 

@@ -26,6 +26,8 @@ import kotlinx.coroutines.launch
 
 class ScanBLEDevicesFragment : Fragment() {
     val bleViewModel = BLEViewModel.singelton
+    val settingsViewModel = SettingsViewModel.singelton
+
     lateinit var dataBinding : ScanBLeDevicesFragmentBinding
 
     val PERMISSION_REQUEST_CODE: Int = 101
@@ -69,6 +71,13 @@ class ScanBLEDevicesFragment : Fragment() {
                     showDialog(scanResult, requireContext())
                 }
                 dataBinding.llContainer.addView(listItem.root)
+                if (scanResult.device.address == settingsViewModel.getStringSetting("BT_DEVICE")){
+                    bleViewModel.connectToDevice(scanResult, requireContext())
+                    SettingsViewModel.singelton.writeSetting("BT_DEVICE", scanResult.device.address)
+                    findNavController().navigate(
+                        R.id.action_global_gasTankFragment
+                    )
+                }
             }
         }
 
@@ -111,6 +120,7 @@ class ScanBLEDevicesFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         bleViewModel.setupBluetooth(activity)
+        bleViewModel.startScanning()
         (activity as AppCompatActivity).supportActionBar?.title = "Scanner"
     }
 

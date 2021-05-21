@@ -33,7 +33,7 @@
             <View
                 android:id="@+id/v_progress"
                 android:layout_width="191dp"
-                android:layout_height="100dp"
+                android:layout_height="1dp"
                 android:layout_marginBottom="140dp"
                 android:background="@drawable/rounded_corners"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textStyle="bold"
-            android:text="100%"
+            android:text="0%"
             android:textSize="34dp" />
 
 
