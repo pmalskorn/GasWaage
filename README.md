@@ -8,18 +8,35 @@ GasWaage is a project that shows the user the level of a gas cylinder located in
 
 ## Schematics
 
+<p align="center">
+  <img src="Pictures/schematic.JPG" width="800" title="Schematic">
+</p>
+
+## Config the HM-10 Module
+
+>AT+PWRM1
+
+OK+Set:1
+
+>AT+NAMEGasWaage
+
+OK+Set:GasWaage
+
 ## Part List
-1. HX711 ADC
-1. 4x 50KG Weight Cell
-1. HM-10 Bluetooth Modul
-1. Attiny13A
-1. 3.3V Voltage Regulator (MCP 1700)
-1. DIP 8 Socket
-1. 4cm x 6xcm perfboard
-1. Mico-USB breakout board (Or other Power supply adapter)
-1. PIN Header (Male & Female)
-1. toggle switch
-1. jumper cable
-1. 3D Printed Parts
+1. Attiny13A & DIP 8 Socket
+2. HM-10 Bluetooth Modul
+3. HX711 ADC & (4x) 50KG Weight Cell
+4. 3.3V Voltage Regulator (MCP 1700)
+5. 3D Printed Parts
+6. Mico-USB breakout board (Or other Power supply adapter)
+7. Toggle Switch
+8. 4cm x 6xcm perfboard
+9. PIN Header (Male & Female)
+10. jumper cable
+
+
+## Todo
+1. Improve the App
+2. Replace the HM-10 with something better
 
 
