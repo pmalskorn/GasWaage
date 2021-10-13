@@ -1,5 +1,5 @@
 # GasWaage
-GasWaage is a project that shows the user the level of a gas cylinder located in a hard-to-reach place. This project consists of two parts, the scale which sends the weight of the gas bottle to the mobile phone via bluetooth low energy and the Android application itself. The main components of the scale consist of an Attiny13A, HM-10 Bluetooth module and an HX711 Load Cell Amplifier.
+GasWaage is a project that shows the level of a gas cylinder located in a hard-to-reach place. This project consists of two parts, the scale which sends the weight of the gas bottle to the mobile phone via bluetooth low energy and the Android application itself. The main components of the scale consist of an Attiny13A, HM-10 Bluetooth module and an HX711 Load Cell Amplifier.
 
 <p align="center">
   <img src="Pictures/AppMain.png" width="200" title="Main App View.">
