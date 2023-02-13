@@ -38,5 +38,6 @@ OK+Set:GasWaage
 1. Improve the App
 2. Replace the HM-10 with something better
 3. improve 3d printed parts
+4. Pull all PINS that atre not used to Ground / VCC 
 
 
