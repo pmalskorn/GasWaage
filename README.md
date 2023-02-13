@@ -3,7 +3,6 @@ GasWaage is a project that shows the level of a gas cylinder located in a hard-t
 
 <p align="center">
   <img src="Pictures/AppMain.png" width="200" title="Main App View.">
-  <img src="Pictures/ScaleWithBottle.jpg" width="300"  title="Position of scale in the camper.">
 </p>
 
 ## Schematics
